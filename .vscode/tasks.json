@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build fdtd1d",
+      "type": "shell",
+      "command": "g++",
+      "args": [
+        "-Wall",
+        "-Wextra",
+        "-std=c++20",
+        "-g",
+        "${workspaceFolder}/src/main.cpp",
+        "${workspaceFolder}/src/fdtd1d.cpp",
+        "-o",
+        "${workspaceFolder}/build/fdtd1d.exe"
+      ],
+      "problemMatcher": ["$gcc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "detail": "Build FDTD1D with g++"
+    }
+  ]
+}

@@ -10,12 +10,11 @@ The main goal of the project is educational and exploratory: to build a **clean,
 
 ## Physical Model
 
-The simulator solves the 1D Maxwell curl equations in a homogeneous, isotropic, lossless medium:
+The simulator solves the 1D Maxwell curl equations in a homogeneous, isotropic,
+lossless medium:
 
-\[
-\frac{\partial E}{\partial t} = \frac{1}{\varepsilon} \frac{\partial H}{\partial x}, \qquad
-\frac{\partial H}{\partial t} = \frac{1}{\mu} \frac{\partial E}{\partial x}
-\]
+∂E/∂t = (1/ε) ∂H/∂x  
+∂H/∂t = (1/μ) ∂E/∂x
 
 using a **leapfrog FDTD scheme**:
 - Electric field **E** sampled at integer spatial nodes  
@@ -28,9 +27,7 @@ using a **leapfrog FDTD scheme**:
 
 - Spatial discretization: uniform grid with spacing `dx`
 - Time step:
-  \[
-  \Delta t = S \frac{\Delta x}{c}, \quad c = \frac{1}{\sqrt{\varepsilon \mu}}
-  \]
+  Δt = S · (Δx / c), with c = 1 / √(ε μ)
 - Courant number `S ≤ 1` ensures numerical stability
 
 The update equations are implemented explicitly following the standard Yee scheme in one dimension.
@@ -43,13 +40,19 @@ The solver supports multiple boundary conditions:
 
 ### Reflective Boundary (PEC)
 - Enforces `E = 0` at the domain boundaries  
-- Produces total reflection of the incident wave  
+- Produces total reflection of the incident wave
+
+![EH_fieldsReflective](https://github.com/user-attachments/assets/0febfc0d-4b60-4dbb-95bb-d2927213ed50)
+
 
 ### Mur First-Order Absorbing Boundary
 - Implements **Mur’s first-order absorbing boundary condition**  
 - Approximates an open domain  
 - Significantly reduces boundary reflections  
-- Requires storing field values from the previous time step  
+- Requires storing field values from the previous time step
+
+![EH_fields](https://github.com/user-attachments/assets/a3d75377-732b-43a2-926f-abf7599c9615)
+
 
 ---
 
@@ -57,9 +60,7 @@ The solver supports multiple boundary conditions:
 
 A **soft Gaussian pulse source** is used to excite the domain:
 
-\[
-s(n) = A \exp\left[-\left(\frac{n - n_0}{\text{spread}}\right)^2\right]
-\]
+s(n) = A · exp( - ((n − n₀) / spread)² )
 
 The source is injected additively into the electric field, avoiding hard discontinuities and providing broadband excitation suitable for transient analysis.
 

@@ -19,7 +19,7 @@ int main(){
     config.S  = 0.99;
     config.eps = em::eps0;
     config.mu  = em::mu0;
-    config.boundary = BoundaryType::Reflective;
+    config.boundary = BoundaryType::Mur1;
 
     FDTD1D fdtd1d(config);
 

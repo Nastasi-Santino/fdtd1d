@@ -2,6 +2,25 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from pathlib import Path
+import matplotlib as mpl
+
+mpl.rcParams.update({
+    "figure.figsize": (10, 4),
+    "figure.dpi": 100,
+    "font.family": "serif",
+    "font.serif": ["Times New Roman", "Times", "Computer Modern Roman"],
+    "mathtext.fontset": "cm",
+    "axes.labelsize": 12,
+    "axes.titlesize": 12,
+    "xtick.labelsize": 10,
+    "ytick.labelsize": 10,
+    "legend.fontsize": 10,
+    "lines.linewidth": 1.5,
+    "axes.grid": True,
+    "grid.linestyle": "--",
+    "grid.linewidth": 0.5,
+    "grid.alpha": 0.6,
+})
 
 # ----------------------------
 # Locate project folders
@@ -68,12 +87,12 @@ if Hmax == 0.0: Hmax = 1.0
 fig, axE = plt.subplots(figsize=(10, 4))
 axH = axE.twinx()
 
-(lineE,) = axE.plot(x0, E0, label="E(x)")
-(lineH,) = axH.plot(x0, H0, color="orange", label="H(x)")
+(lineE,) = axE.plot(x0, E0, color="black", label=r"$E(x)$")
+(lineH,) = axH.plot(x0, H0, color="tab:blue", linestyle="--", label=r"$H(x)$")
 
-axE.set_xlabel("x [m]")
-axE.set_ylabel("E [V/m]")
-axH.set_ylabel("H [A/m]")
+axE.set_xlabel(r"$x\ \mathrm{[m]}$")
+axE.set_ylabel(r"$E\ \mathrm{[V/m]}$")
+axH.set_ylabel(r"$H\ \mathrm{[A/m]}$")
 
 axE.grid(True)
 
@@ -83,9 +102,9 @@ axH.set_ylim(-1.1 * Hmax, 1.1 * Hmax)
 # Combine legends from both axes
 lines = [lineE, lineH]
 labels = [l.get_label() for l in lines]
-axE.legend(lines, labels, loc="upper right")
+axE.legend(lines, labels, loc="upper right", frameon=False)
 
-axE.set_title(f"FDTD 1D Fields\n{csv_files[0].name}")
+axE.set_title(r"1D FDTD electric and magnetic fields")
 
 # Optional: mark source position if you know it's at N/4
 # x_src = x0[len(x0)//4]
@@ -101,7 +120,7 @@ def update(frame_idx: int):
     lineE.set_data(x, E)
     lineH.set_data(x, H)
 
-    axE.set_title(f"FDTD 1D Fields\n{file_path.name}")
+    axE.set_title(r"1D FDTD electric and magnetic fields")
     return (lineE, lineH)
 
 fps = 30
@@ -113,5 +132,5 @@ plt.show()
 # ----------------------------
 # Optional save
 # ----------------------------
-# anim.save(plots_dir / "EH_fields.gif", writer="pillow", fps=fps)
+anim.save(plots_dir / "EH_fields.gif", writer="pillow", fps=fps)
 # anim.save(plots_dir / "EH_fields.mp4", writer="ffmpeg", fps=fps)
